@@ -1,0 +1,48 @@
+---
+api_version: v1
+
+uuid: 6561
+
+name: WIN-CMD-XCOPY-STARTUP
+
+# active, inactive, archived, active_being_tuned
+state: active_being_tuned
+
+context:
+  description: |-
+    This detector identifies instances of cmd.exe executing with a command line parameters containing multiple &'s as well as references to xcopy and the startup folder.
+  normal_behavior_notes: |-
+    Aside from rare admin fringe cases / IT setup, this behavior is abnormal and should be cause for concern.
+    Identify any additional commands taking place alongside xCopy and activity in the user's Startup directory to determine further malicious or suspect activity.
+  malicious_behavior_notes: |-
+    Previous malicious/adversary activity has had consistent patterns matched with the behavior detected.
+    Use extra scrutiny when examining the additional command line parameters if applicable, as well as investgating filemods (in or out of Startup), netconns, and childprocs.
+  reference_urls:
+    - https://www.blackhillsinfosec.com/backdoors-breaches-logon-scripts/
+
+attack_techniques_involved:
+  explicitly_used:
+    -T1059.003
+    -T1547.001
+
+  conditionally_used: []
+
+threat_intelligence: none
+
+suppression_control:
+  allow_suppression: false
+  allow_suppression_with_option: true
+
+# self, parent, grandparent
+reported_process_depth: self
+
+scoring_control:
+  override_expected_impact: false
+
+detections:
+  red_canary_behavioral:
+    matcher: |-
+      windows? && process_path_is_likely_windows? &&
+      process_is_likely?('cmd') &&
+      process_command_line_likely_matches_all?('xcopy', 'startup') &&
+      process_command_line_includes_at_least_x?(count:2, possible_matches: ['&', '&&'])
