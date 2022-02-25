@@ -1,0 +1,25 @@
+---
+api_version: v1
+uuid: 5357
+name: A-BST-MODE-0005
+state: active_being_tuned
+context:
+  description: desc
+  normal_behavior_notes: norm
+  malicious_behavior_notes: mal
+  reference_urls: tes.com
+attack_techniques_involved:
+  explicitly_used:
+  - - T1557.002
+  conditionally_used:
+  - T1098
+threat_intelligence: none
+suppression_control:
+  allow_suppression: true
+  allow_suppression_with_option: false
+reported_process_depth: Self
+scoring_control:
+  override_expected_impact: false
+detections:
+  red_canary_behavioral:
+    matcher: windows?&&canary_forwarder?
