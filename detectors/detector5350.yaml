@@ -1,0 +1,27 @@
+---
+api_version: v1
+uuid: 5350
+name: A-BST-MODE-16
+state: active_being_tuned
+context:
+  description: Foo
+  normal_behavior_notes: Bar
+  malicious_behavior_notes: Foo Bar Baz
+  reference_urls: www.google.com
+attack_techniques_involved:
+  explicitly_used:
+  - - T1557.002
+  conditionally_used:
+  - T1098
+threat_intelligence: none
+suppression_control:
+  allow_suppression: true
+  allow_suppression_with_option: false
+reported_process_depth: Self
+scoring_control:
+  override_expected_impact: 'true'
+detections:
+  red_canary_behavioral:
+    matcher: "|- windows? && process_path_is_likely_windows? && process_is_likely?('cmd')
+      && process_command_line_likely_matches_all?('xcopy', 'startup') && process_command_line_includes_at_least_x?(count:2,
+      possible_matches: ['&', '&&'])"
