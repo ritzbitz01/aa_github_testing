@@ -19,7 +19,7 @@ suppression_control:
   allow_suppression_with_option: true
 reported_process_depth: self
 scoring_control:
-  override_expected_impact: false
+  override_expected_impact: 'false'
 detections:
   red_canary_behavioral:
     matcher: "|- windows? && process_path_is_likely_windows? && process_is_likely?('cmd')
