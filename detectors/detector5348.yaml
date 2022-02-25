@@ -1,0 +1,27 @@
+---
+api_version: v1
+uuid: 5348
+name: A-BST-MODE-10
+state: active_being_tuned
+context:
+  description: Thi sis my description
+  normal_behavior_notes: normal behavior good
+  malicious_behavior_notes: bad behavior bad
+  reference_urls: www.google.com
+attack_techniques_involved:
+  explicitly_used:
+  - - T1557.002
+  conditionally_used:
+  - T1557.002
+threat_intelligence: none
+suppression_control:
+  allow_suppression: true
+  allow_suppression_with_option: false
+reported_process_depth: Self
+scoring_control:
+  override_expected_impact: 'false'
+detections:
+  red_canary_behavioral:
+    matcher: "|- windows? && process_path_is_likely_windows? && process_is_likely?('cmd')
+      && process_command_line_likely_matches_all?('xcopy', 'startup') && process_command_line_includes_at_least_x?(count:2,
+      possible_matches: ['&', '&&'])"
