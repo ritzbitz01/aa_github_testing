@@ -1,0 +1,26 @@
+---
+api_version: v1
+uuid: 5353
+name: A-BST-MODE-002
+state: active_being_tuned
+context:
+  description: description
+  normal_behavior_notes: normal
+  malicious_behavior_notes: malicious
+  reference_urls: google.com, bing.com
+attack_techniques_involved:
+  explicitly_used:
+  - - T1098
+  conditionally_used:
+  - T1134
+threat_intelligence: none
+suppression_control:
+  allow_suppression: true
+  allow_suppression_with_option: false
+reported_process_depth: Self
+scoring_control:
+  override_expected_impact: false
+detections:
+  red_canary_behavioral:
+    matcher: windows? && process_path_is_likely_windows? && process_is_likely?('cmd')
+      && process_command_line_likely_matches_all?('xcopy', 'startup')
